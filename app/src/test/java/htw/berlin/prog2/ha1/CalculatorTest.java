@@ -114,10 +114,24 @@ class CalculatorTest {
         calc.pressDigitKey(1);
         calc.pressBinaryOperationKey("+");
         calc.pressDigitKey(5);
-        calc.pressEqualsKey();
-        calc.pressEqualsKey();
+        calc.pressEqualsKey(); // ergibt 6
+        calc.pressEqualsKey(); // sollte 11 ergeben (6+5)
 
         String expected = "11";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should display the result after pressing dot before a positive value")
+    void testLeadingDotInput() {
+        Calculator calc = new Calculator();
+
+        calc.pressDotKey();
+        calc.pressDigitKey(5);
+
+        String expected = "0.5";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
