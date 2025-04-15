@@ -9,9 +9,7 @@ package htw.berlin.prog2.ha1;
 public class Calculator {
 
     private String screen = "0";
-
     private double latestValue;
-
     private String latestOperation = "";
 
     /**
@@ -29,9 +27,13 @@ public class Calculator {
      * @param digit Die Ziffer, deren Taste gedrückt wurde
      */
     public void pressDigitKey(int digit) {
-        if(digit > 9 || digit < 0) throw new IllegalArgumentException();
+        if(digit > 9 || digit < 0) {
+            throw new IllegalArgumentException();
+        }
 
-        if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
+        if (screen.equals("0") || (latestValue == Double.parseDouble(screen) && !screen.contains("."))) {
+            screen = "";
+        }
 
         screen = screen + digit;
     }
@@ -92,10 +94,21 @@ public class Calculator {
      * Seite hinzu und aktualisiert den Bildschirm. Daraufhin eingegebene Zahlen werden rechts vom
      * Trennzeichen angegeben und daher als Dezimalziffern interpretiert.
      * Beim zweimaligem Drücken, oder wenn bereits ein Trennzeichen angezeigt wird, passiert nichts.
+     *
+     * Zusatz: Wenn der Bildschirminhalt leer ist, wird "0." gesetzt.
      */
     public void pressDotKey() {
-        if(!screen.contains(".")) screen = screen + ".";
-    }
+        if (!screen.contains(".") && screen.equals("")) {
+                screen = "0.";
+                } else {
+                    screen += ".";
+                }
+            }
+    //alter Code
+        /*if (!screen.contains(".")) {
+            screen += ".";
+        }*/
+
 
     /**
      * Empfängt den Befehl der gedrückten Vorzeichenumkehrstaste ("+/-").
